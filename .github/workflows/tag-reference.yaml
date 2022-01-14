@@ -22,4 +22,4 @@ jobs:
           curl -X POST \
                "${{ secrets.SLACK_URL }}" \
                -H 'Content-type: application/json' \
-               --data '{"text":"New Release!", "attachments": [ { "title": "Release ${{ env.RELEASE_VERSION }}", "title_link": "https://github.com/${{ github.repository }}/releases/tag/${{ env.RELEASE_VERSION }}" } ] }'
+               --data '{"text":"New Release of ${{ github.repository }}", "attachments": [ { "title": "Release Notes for ${{ env.RELEASE_VERSION }}", "title_link": "https://github.com/${{ github.repository }}/releases/tag/${{ env.RELEASE_VERSION }}" } ] }'
