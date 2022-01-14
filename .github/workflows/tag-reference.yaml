@@ -6,9 +6,9 @@ on:
       - "v*.*.*"
 jobs:
   new-tag-notification:
-    - uses: code-fiddle/github-actions-playground/.github/workflows/deploy-template.yaml@main
-      secrets:
-        slack_url: ${{ secrets.SLACK_UR }}
+    uses: code-fiddle/github-actions-playground/.github/workflows/deploy-template.yaml@main
+    secrets:
+      slack_url: ${{ secrets.SLACK_UR }}
       # - name: Set output
       #   id: vars
       #   run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
