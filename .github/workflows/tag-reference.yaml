@@ -22,4 +22,4 @@ jobs:
         run: |
           echo $RELEASE_VERSION
           echo ${{ steps.vars.outputs.tag }}
-          echo https://github.com/${{ env.GH_ORG }}/${{ env.GH_PROJECT }}//${{ env.$RELEASE_VERSION }}
+          echo https://github.com/${{ env.GH_ORG }}/${{ env.GH_PROJECT }}//${{ env.RELEASE_VERSION }}
