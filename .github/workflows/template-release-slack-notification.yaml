@@ -1,0 +1,27 @@
+name: Notify about new release via Slack
+
+on:
+  workflow_call:
+    secrets:
+      slack_url:
+        required: true
+
+jobs:
+  slack-notification:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set output
+        id: vars
+        run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
+      - name: Check output
+        env:
+          RELEASE_VERSION: ${{ steps.vars.outputs.tag }}
+        run: |
+          echo $RELEASE_VERSION
+          echo ${{ steps.vars.outputs.tag }}
+          echo https://github.com/${{ github.repository }}/releases/tag/${{ env.RELEASE_VERSION }}
+          curl -X POST \
+               "${{ secrets.slack_url }}" \
+               -H 'Content-type: application/json' \
+               --data '{"text":"New Release of ${{ github.repository }}", "attachments": [ { "title": "Release Notes for ${{ env.RELEASE_VERSION }}", "title_link": "https://github.com/${{ github.repository }}/releases/tag/${{ env.RELEASE_VERSION }}" } ] }'

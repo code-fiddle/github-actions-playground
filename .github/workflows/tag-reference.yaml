@@ -5,21 +5,23 @@ on:
     tags:
       - "v*.*.*"
 jobs:
-  test:
+  new-tag-notification:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Set output
-        id: vars
-        run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
-      - name: Check output
-        env:
-          RELEASE_VERSION: ${{ steps.vars.outputs.tag }}
-        run: |
-          echo $RELEASE_VERSION
-          echo ${{ steps.vars.outputs.tag }}
-          echo https://github.com/${{ github.repository }}/releases/tag/${{ env.RELEASE_VERSION }}
-          curl -X POST \
-               "${{ secrets.SLACK_URL }}" \
-               -H 'Content-type: application/json' \
-               --data '{"text":"New Release of ${{ github.repository }}", "attachments": [ { "title": "Release Notes for ${{ env.RELEASE_VERSION }}", "title_link": "https://github.com/${{ github.repository }}/releases/tag/${{ env.RELEASE_VERSION }}" } ] }'
+      - uses: code-fiddle/github-actions-playground/.github/workflows/deploy-template.yaml@main
+        secrets:
+          slack_url: ${{ secrets.SLACK_UR }}
+      # - name: Set output
+      #   id: vars
+      #   run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
+      # - name: Check output
+      #   env:
+      #     RELEASE_VERSION: ${{ steps.vars.outputs.tag }}
+      #   run: |
+      #     echo $RELEASE_VERSION
+      #     echo ${{ steps.vars.outputs.tag }}
+      #     echo https://github.com/${{ github.repository }}/releases/tag/${{ env.RELEASE_VERSION }}
+      #     curl -X POST \
+      #          "${{ secrets.SLACK_URL }}" \
+      #          -H 'Content-type: application/json' \
+      #          --data '{"text":"New Release of ${{ github.repository }}", "attachments": [ { "title": "Release Notes for ${{ env.RELEASE_VERSION }}", "title_link": "https://github.com/${{ github.repository }}/releases/tag/${{ env.RELEASE_VERSION }}" } ] }'
