@@ -6,7 +6,7 @@ on:
       - "v*.*.*"
 jobs:
   new-tag-notification:
-    uses: code-fiddle/github-actions-playground/.github/workflows/deploy-template.yaml@main
+    uses: code-fiddle/github-actions-playground/.github/workflows/template-release-slack-notification.yaml@main
     secrets:
       slack_url: ${{ secrets.SLACK_URL }}
       # - name: Set output
