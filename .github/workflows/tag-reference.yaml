@@ -1,8 +1,4 @@
-name: Get Tag Reference
-# https://github.com/camunda-cloud/console/releases/tag/1.3.3-rc2
-env:
-  GH_ORG: code-fiddle
-  GH_PROJECT: github-actions-playground
+name: Show Tag Reference
 
 on:
   push:
@@ -23,3 +19,7 @@ jobs:
           echo $RELEASE_VERSION
           echo ${{ steps.vars.outputs.tag }}
           echo https://github.com/${{ github.repository }}/releases/tag/${{ env.RELEASE_VERSION }}
+          curl -X POST \
+               "${{ secrets.SLACK_URL }}" \
+               -H 'Content-type: application/json' \
+               --data '{"text":"New Release!", { "attachments": [ { "title": "Release ${{ env.RELEASE_VERSION }}", "title_link": "https://github.com/${{ github.repository }}/releases/tag/${{ env.RELEASE_VERSION }}" } ] }}'
